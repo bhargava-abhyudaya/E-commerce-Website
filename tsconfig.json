@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/navbar.jsx", "components/footer.jsx", "pages/Tabs.jsx", "pages/signup.jsx", "pages/Phones.jsx", "pages/order.jsx", "pages/login.jsx", "pages/Laptops.jsx", "pages/index.jsx", "pages/contacts.jsx", "pages/checkout.jsx", "pages/about.jsx", "pages/_document.jsx", "pages/_app.jsx", "pages/api/pincodes.js"],
   "exclude": ["node_modules"]
 }
