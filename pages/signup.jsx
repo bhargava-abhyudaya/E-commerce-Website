@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { BiSolidShow } from "react-icons/bi";
 import { useState } from "react";
+import Router from "next/router";
 
 export default function signup() {
     const [hidePass, setHidePass] = useState("password")
@@ -12,9 +13,38 @@ export default function signup() {
             setHidePass("password")
         }
     }
+    const [name, setName] = useState()
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+    const handleChange = (e) => {
+        if (e.target.name === "name") {
+            setName(e.target.value)
+        } else if (e.target.name === "email") {
+            setEmail(e.target.value)
+        } else if (e.target.name === "password") {
+            setPassword(e.target.value)
+        }    
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const formBody = {name,email,password}
+        let res = await fetch("/api/createUser", {
+            method: "POST",
+            body: JSON.stringify(formBody),
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formBody)
+        })
+        res = await res.json()
+        setName("")
+        setEmail("")
+        setPassword("") 
+        Router.push("/login")
+    }
     return (
-        <div className="md:-mt-18 text-center">
-            <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div>
+            <div className="-mt-20 md:-mt-16 min-h-screen bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <img className="mx-auto h-10 w-auto" src="https://www.svgrepo.com/show/301692/login.svg" alt="Workflow" />
                     <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
@@ -28,13 +58,13 @@ export default function signup() {
                         </Link>
                     </p>
                 </div>
-
-                <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                <form onSubmit={handleSubmit} className="mt-8 sm:mx-auto sm:w-full sm:max-w-md" method="POST">
+                
 
 
                     <div>
-                        <label for="email" className="ml-5 block text-sm font-medium leading-5  text-gray-700">Name</label>
-                        <input id="name" name="name" placeholder="Enter your Name" type="text" required="" className="w-[40vh] text-black bg-white md:w-full rounded-lg block px-3 py-2 border ml-5 border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></input>
+                        <label for="text" className="ml-5 block text-sm font-medium leading-5  text-gray-700">Name</label>
+                        <input onChange={handleChange} id="name" name="name" placeholder="Enter your Name" type="text" required="" className="w-[40vh] text-black bg-white md:w-full rounded-lg block px-3 py-2 border ml-5 border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"></input>
 
                     </div>
 
@@ -45,7 +75,7 @@ export default function signup() {
                             Email address
                         </label>
                         <div className="mt-1 relative rounded-md shadow-sm">
-                            <input id="email" name="email" placeholder="user@example.com" type="email" required="" className="ml-5 text-black appearance-none block w-[40vh] md:w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5
+                            <input id="email" onChange={handleChange} name="email" placeholder="user@example.com" type="email" required="" className="ml-5 text-black appearance-none block w-[40vh] md:w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5
                 "/>
                             <div className="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <svg className="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -62,7 +92,7 @@ export default function signup() {
                             Password
                         </label>
                         <div className="flex flex-wrap mt-1 rounded-md shadow-sm">
-                            <input id="password" name="password" type={hidePass} required="" className="text-black appearance-none ml-5 w-[35vh] md:w-[52vh] px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" /><BiSolidShow onClick={changePassState} className="text-2xl ml-3 my-auto" />
+                            <input onChange={handleChange} id="password" name="password" type={hidePass} required="" className="text-black appearance-none ml-5 w-[35vh] md:w-[52vh] px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" /><BiSolidShow onClick={changePassState} className="text-2xl ml-3 my-auto" />
                         </div>
                     </div>
 
@@ -84,7 +114,7 @@ export default function signup() {
                     </div>
 
 
-                </div>
+                </form>
             </div>
         </div>
     )

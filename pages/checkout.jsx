@@ -3,10 +3,12 @@ import { IoCloseCircle } from "react-icons/io5";
 import { FaCirclePlus, FaCircleMinus } from "react-icons/fa6";
 import Link from "next/link";
 
+
 export default function cehckout({ cart, addToCart, removeFromCart, clearCart, subTotal }) {
     return (
         <>
             <div className="py-8 text-center text-3xl font-bold">Checkout</div>
+            
             <h1 className="px-6 my-2 text-xl">1. Please Enter your delivery details!!</h1>
             <div class="wrap flex sm:ml-0 mb-4 w-full md:ml-8" bis_skin_checked="1">
                 <div className="w-3/7 wrap mx-4">
@@ -68,16 +70,19 @@ export default function cehckout({ cart, addToCart, removeFromCart, clearCart, s
                                     <li key={k} className="text-xl my-2"><div className="ml-2 item flex flex-wrap"><div className="w-1/4">{cart[k].name}</div><div className="flex flex-wrap ml-5"><FaCircleMinus onClick={() => { removeFromCart(k, 1, cart[k].price, cart[k].name, cart[k].color) }} className="hover:cursor-pointer mt-1 mx-2" />
                                         {cart[k].quantity} <FaCirclePlus onClick={() => { addToCart(k, 1, cart[k].price, cart[k].name, cart[k].color) }} className="mt-1 mx-2 hover:cursor-pointer" /> </div> </div></li>
                                 </ol>
-                                <div className="font-bold mx-16 text-2xl">
-                                    Grand Total: ₹{subTotal.toLocaleString()}
-                                </div>
-                                <div className="text-center w-1/2">
-                                    <Link href={'/payment'} ><button className="font-semibold text-xl m-4 h-16 w-60 bg-white text-black rounded-lg">Proceed to Payment</button></Link>
-                                </div>
+                               
+                                
                             </>
                         )
                     })
+                    
                 }
+                <div className="font-bold mx-16 text-2xl">
+                                    Grand Total: ₹{subTotal.toLocaleString()}
+                                </div>
+                <div className="text-center w-1/2">
+                                    <Link href={'/payment'} ><button className="font-semibold text-xl m-4 h-16 w-60 bg-white text-black rounded-lg">Proceed to Payment</button></Link>
+                                </div>
             </div>
         </>
     )

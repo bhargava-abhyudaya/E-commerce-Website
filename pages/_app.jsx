@@ -2,13 +2,30 @@ import "../styles/globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { useState,useEffect } from "react";
+import React from "react";
+import Router from "next/router";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function App({ Component, pageProps }) {
   const [cart, setCart] = useState({});
   const [subTotal, setSubTotal] = useState(0);
   
+  const showCart2 = () => {
+    const cart2 = document.getElementById("cartMenu");
+    if (cart2.classList.contains("collapse")) {
+      cart2.classList.remove("collapse");
+    }
+  }
   
+  const buyNow = (itemCode ,quantity , price ,name,color) => {
+    let newCart = {};
+    saveCart(newCart);
+    addToCart(itemCode,quantity,price,name,color);
+    Router.push('/checkout');
+  }
+
   const saveCart = (cart) => {
     localStorage.setItem("cart", JSON.stringify(cart));
     let Total = 0
@@ -31,7 +48,6 @@ export default function App({ Component, pageProps }) {
   }
 
   useEffect(() => {
-    console.log("useEffect is working")
     try{
       if (localStorage.getItem("cart")) {
         calculateSubTotal(JSON.parse(localStorage.getItem("cart")))
@@ -53,10 +69,34 @@ export default function App({ Component, pageProps }) {
     }
     setCart(newCart)
     saveCart(newCart)
+    showCart2()
+    toast.success('Item added to cart', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+      });
+    
   }
   const clearCart = () => {
     setCart({})
     saveCart({})
+    toast.info('Cart Cleared Successfully!!!', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+      });
   }
   const removeFromCart = (itemCode,quantity,price,name,color) => {
     let newCart = cart
@@ -70,11 +110,11 @@ export default function App({ Component, pageProps }) {
     saveCart(newCart)
   }
       return (
-        <>
-          <Navbar cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} saveCart={saveCart} />
-          <Component cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} saveCart={saveCart} {...pageProps} />
+        <div>
+          <Navbar cart={cart} buyNow = {buyNow} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} saveCart={saveCart} />
+          <Component cart={cart} buyNow = {buyNow} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} saveCart={saveCart} {...pageProps} />
           <Footer />
-        </>
+        </div>
       );
       
     

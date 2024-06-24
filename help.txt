@@ -1,0 +1,10 @@
+{
+  "title": ,
+  "slug":req.body[i].slug,
+  "description":req.body[i].description,
+  "price":req.body[i].price,
+  "image":req.body[i].image,
+  "category":req.body[i].category,
+  "availableQuantity":req.body[i].availableQuantity,
+  "color":req.body[i].color
+}
