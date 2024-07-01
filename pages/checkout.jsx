@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function cehckout({ cart, addToCart, removeFromCart, clearCart, subTotal }) {
     return (
-        <>
+        <div className="bg-black">
             <div className="py-8 text-center text-3xl font-bold">Checkout</div>
             
             <h1 className="px-6 my-2 text-xl">1. Please Enter your delivery details!!</h1>
@@ -84,6 +84,6 @@ export default function cehckout({ cart, addToCart, removeFromCart, clearCart, s
                                     <Link href={'/payment'} ><button className="font-semibold text-xl m-4 h-16 w-60 bg-white text-black rounded-lg">Proceed to Payment</button></Link>
                                 </div>
             </div>
-        </>
+        </div>
     )
 }

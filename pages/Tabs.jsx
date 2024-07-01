@@ -8,7 +8,7 @@ export default function Phones({products}){
     return (
 
 
-        <div className="-z-10 text-gray-600 body-font">
+        <div className="-z-10 text-gray-600 bg-black body-font">
             <div className="-z-50"><img className="w-full" src="/Laptop cover.png" alt="sale"/></div>
   <div className="container mx-auto py-24">
     <div className="flex flex-wrap justify-between -mt-12 px-8">

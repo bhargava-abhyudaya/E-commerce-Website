@@ -1,7 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import Link from "next/link";
+import Router from "next/router";
 import { BiSolidShow } from "react-icons/bi";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { set } from "mongoose";
 
 export default function login() {
     const [hidePass, setHidePass] = useState("password")
@@ -33,12 +37,63 @@ export default function login() {
             body: JSON.stringify(formBody)
         })
         res = await res.json()
-        console.log(res.status+'fuck')
-        setEmail("")
-        setPassword("")
+        if (res.check) {
+            localStorage.setItem("token", res.token)
+            toast.success('Login Success', {
+                position: "top-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+
+            });
+            Router.push("/")
+            setEmail("")
+            setPassword("")
+        }else if (res.message === "Invalid Credentials") {
+            toast.error('Invalid Credintials ', {
+                position: "top-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+
+            });
+        }else if (res.message === "User not found") {
+            toast.warning('Account not found!!! Create account?', {
+                position: "top-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+
+            });
+
+        }
     }
     return (
-        <div className="md:-mt-18">
+        <div className="md:-mt-18 bg-black">
+            <ToastContainer
+                position="top-left"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
             <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <img className="mx-auto h-10 w-auto" src="https://www.svgrepo.com/show/301692/login.svg" alt="Workflow" />
@@ -56,7 +111,7 @@ export default function login() {
                 <form onSubmit={handleSubmit} className="mt-8 sm:mx-auto sm:w-full sm:max-w-md" method="POST">
 
 
-                   
+
 
 
 
@@ -89,7 +144,7 @@ export default function login() {
                     <div className="mt-6">
                         <span className="block w-full rounded-md shadow-sm">
                             <button type="submit" className="w-[40vh] md:w-full bg-white text-black ml-5 flex justify-center py-2 px-4 border border-transparent text-base font-medium rounded-md bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-black-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                                Login 
+                                Login
                             </button>
                         </span>
                     </div>

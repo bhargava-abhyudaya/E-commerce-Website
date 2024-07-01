@@ -43,7 +43,7 @@ export default function signup() {
         Router.push("/login")
     }
     return (
-        <div>
+        <div className="bg-black">
             <div className="-mt-20 md:-mt-16 min-h-screen bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <img className="mx-auto h-10 w-auto" src="https://www.svgrepo.com/show/301692/login.svg" alt="Workflow" />

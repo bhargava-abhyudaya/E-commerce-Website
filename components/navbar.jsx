@@ -4,10 +4,19 @@ import Link from "next/link";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoCloseCircle } from "react-icons/io5";
 import { FaCirclePlus,FaCircleMinus } from "react-icons/fa6";
-import { MdSwapVerticalCircle } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+import { useState } from "react";
 
 
-export default function Navbar({cart, addToCart, removeFromCart, clearCart, subTotal}) {
+export default function Navbar({logout,user,key,cart, addToCart, removeFromCart, clearCart, subTotal}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const showProfile = () => {
+
+    setIsOpen(!isOpen);
+  }
+ 
+  
+
   const showCart = () => {
     let cart = document.querySelector('#cartMenu') ;
     cart.classList.toggle('collapse');
@@ -15,10 +24,10 @@ export default function Navbar({cart, addToCart, removeFromCart, clearCart, subT
   }
   return (
     <header className="text-gray-600 body-font md:top-0 sticky top-0 z-10">
-  <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center bg-black w-full">
-    <Link href={'/'} className="flex title-font font-medium items-center text-gray-900 hover:cursor-pointer mb-4 mb-0">
-      <Image src="/image.png" alt="logo" width={40} height={40} />
-      <span className="ml-3 text-xl">Abhyudaya</span>
+  <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row justify-center items-center bg-black w-full">
+    <Link href={'/'} className="flex title-font font-medium items-center text-gray-900 hover:cursor-pointer justify-center items-center md:mb-2 mb-4">
+      <Image className="items-center justify-center" src="/image.png" alt="logo" width={40} height={40} />
+      <div className="ml-3 text-xl">Abhyudaya</div>
     </Link>
     <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
       <Link href={'/Laptops'} className="mr-5 hover:text-gray-900 hover:cursor-pointer">Laptops</Link>
@@ -26,11 +35,22 @@ export default function Navbar({cart, addToCart, removeFromCart, clearCart, subT
       <Link href={'/Tabs'} className="mr-5 hover:text-gray-900 hover:cursor-pointer">Tablets</Link>
       <Link href={'/about'} className="mr-5 hover:text-gray-900 hover:cursor-pointer">About</Link>
     </nav>
+    <div className="flex flex-wrap items-center justify-center">
+    {!user.value && <Link href={'/login'} className="font-semibold inline-flex bg-white text-black items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"><button >Login</button></Link>}
+    {user.value && <button onClick={showProfile} className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"><CgProfile className="text-2xl" /></button>}
     <button onClick={showCart} className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Cart <FaShoppingCart className="text-2xl mx-4" />
     
     </button>
-   
+    </div>
   </div>
+  
+  {isOpen && <div className="h-50 w-40 right-32 top-30 rounded-xl items-center absolute bg-white text-black text-center justify-center my-auto">
+    
+    <button className="justify-center text-center w-3/4 bg-black text-white p-2 m-3 rounded-lg" ><Link href={'/myAccount'}>Your Account</Link></button>
+    <button className="justify-center text-center w-3/4 bg-black text-white p-2 m-3 rounded-lg" ><Link href={'/myorders'}>Orders</Link></button>
+    <button onClick={logout} className="justify-center text-center w-3/4 bg-black text-white p-2 m-3 rounded-lg" >Logout</button>
+    
+  </div>}
   <div id="cartMenu" className="absolute rounded-xl py-8 collapse p-5 text-black top-30 right-0 w-80 bg-white h-[100vh]">
     <h2 className="text-center text-2xl font-bold text-black">Shopping Cart</h2> 
     {

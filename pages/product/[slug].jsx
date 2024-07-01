@@ -1,11 +1,8 @@
 import { useRouter } from "next/router";
-import { MdArrowDropDown, MdAddShoppingCart } from "react-icons/md";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { useState } from "react";
-import Link from "next/link";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import mongoose from "mongoose";
 import Product from "../../models/Product";
 

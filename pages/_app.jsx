@@ -3,14 +3,22 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { useState,useEffect } from "react";
 import React from "react";
+import { useRouter } from "next/router";
 import Router from "next/router";
+import LoadingBar from "react-top-loading-bar";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function App({ Component, pageProps }) {
+
+  const [progress, setProgress] = useState(0);
+
+  const router = useRouter();
   const [cart, setCart] = useState({});
   const [subTotal, setSubTotal] = useState(0);
+  const [user,setUser] = useState({value:null})
+  const [key,setKey] = useState(0)
   
   const showCart2 = () => {
     const cart2 = document.getElementById("cartMenu");
@@ -18,7 +26,14 @@ export default function App({ Component, pageProps }) {
       cart2.classList.remove("collapse");
     }
   }
-  
+  const logout = () => {
+    if (localStorage.getItem("token")){
+      localStorage.removeItem("token");
+      setUser({value:null})
+      setKey(0)
+      Router.push('/');
+    }
+  }
   const buyNow = (itemCode ,quantity , price ,name,color) => {
     let newCart = {};
     saveCart(newCart);
@@ -48,6 +63,18 @@ export default function App({ Component, pageProps }) {
   }
 
   useEffect(() => {
+    router.events.on("routeChangeStart", () => {
+      setProgress(30);
+    });
+    router.events.on("routeChangeComplete", () => {
+      setProgress(100);
+    });
+  
+    const token = localStorage.getItem("token");
+    if (token){
+      setUser({value:token})
+      setKey(1)
+    }
     try{
       if (localStorage.getItem("cart")) {
         calculateSubTotal(JSON.parse(localStorage.getItem("cart")))
@@ -58,8 +85,9 @@ export default function App({ Component, pageProps }) {
       console.log(error);
       localStorage.removeItem("cart");
     }
-  }, []);
+  }, [router.query]);
 
+ 
   const addToCart = (itemCode ,quantity , price , name,color ) => {
     let newCart = cart
     if(itemCode in cart){
@@ -109,9 +137,11 @@ export default function App({ Component, pageProps }) {
     setCart(newCart)
     saveCart(newCart)
   }
+
       return (
         <div>
-          <Navbar cart={cart} buyNow = {buyNow} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} saveCart={saveCart} />
+          <Navbar logout={logout} user={user} key ={key} cart={cart} buyNow = {buyNow} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} saveCart={saveCart} />
+          <LoadingBar color="#d1001f" waitingTime={400} height={4} progress={progress} onLoaderFinished={() => setProgress(0)} />  
           <Component cart={cart} buyNow = {buyNow} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} saveCart={saveCart} {...pageProps} />
           <Footer />
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function order({ cart, subTotal, clearCart }) {
     return (
-        <div>
+        <div className="bg-black">
             <section className="sm:-mt-40 md:-mt-0 text-gray-600 body-font overflow-hidden">
                 <div className="container px-5 py-24 mx-auto" bis_skin_checked="1">
                     <div className="lg:w-4/5 mx-auto flex flex-wrap" bis_skin_checked="1">

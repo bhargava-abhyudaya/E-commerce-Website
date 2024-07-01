@@ -7,7 +7,7 @@ import { MdOutlineSupportAgent } from "react-icons/md";
 
 export default function Home() {
   return (
-    <div>
+    <div className="bg-black">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="w-full" src="/cover.png" alt="cover" />
       <section className="text-gray-500 body-font" >

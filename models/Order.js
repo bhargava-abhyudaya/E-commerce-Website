@@ -9,6 +9,6 @@ const OrderSchema = new mongoose.Schema({
     address:{type:String,required:true},
     status:{type:String,default:"pending",required:true},
 },{timestamps:true});
-OrderSchema = {};
 
-export default mongoose.model("Order",OrderSchema);
+mongoose.models = {};
+export default mongoose.model("OrderModel",OrderSchema);
