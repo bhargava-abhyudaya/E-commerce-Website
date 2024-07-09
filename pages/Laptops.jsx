@@ -4,6 +4,7 @@ import Link from "next/link";
 import Product from "../models/Product";
 import mongoose from "mongoose";
 
+
 export default function Laptops({products}){
     return (
 
@@ -13,11 +14,11 @@ export default function Laptops({products}){
   <div className="container mx-auto py-24">
     <div className="flex flex-wrap justify-between -mt-12 px-8">
     {products.map((product) =>{
-      return <Link key={product._id} href={`/product/${product._id}`} className="lg:w-[23%] md:w-[45%]  my-4 p-4 w-full bg-metal hover:cursor-pointer">
+      return <Link key={product._id} href={`/product/${product._id}`} className="shadow-secondary-2 lg:w-[23%] md:w-[45%] rounded-xl  my-4 w-full bg-metal hover:cursor-pointer">
         <a className="block md:h-60 relative rounded overflow-hidden">
-          <img alt="ecommerce" className="mx-auto object-cover object-center h-full w-full hover:cursor-pointer block" src={product.image}/>
+          <img alt="ecommerce" className="mx-auto object-cover object-center h-full rounded-xl w-full hover:cursor-pointer block" src={product.image}/>
         </a>
-        <div className="mt-4">
+        <div className="mt-4 p-4">
           <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{product.category} </h3>
           <h2 className="text-gray-900 title-font font-bold text-xl font-medium">{product.title}</h2>
           <p className="mt-1">₹{(product.price).toLocaleString()}</p>

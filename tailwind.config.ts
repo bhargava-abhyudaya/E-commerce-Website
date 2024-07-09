@@ -10,10 +10,10 @@ const config: Config = {
     colors: {
      'transparent': 'transparent',
       'current': 'currentColor',
-      'white': '#f8fafc',
+      'white': '#ffffff',
       'purple': '#3f3cbb',
       'midnight': '#121063',
-      'metal': '#565584',
+      'metal': '#6864f4',
       'tahiti': '#3ab7bf',
       'silver': '#334155',
       'bubble-gum': '#ff77e9',
